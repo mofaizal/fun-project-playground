@@ -1,0 +1,12 @@
+RootManagementGroupAzureSPNAppId = ""
+RootManagementGroupAzureSPNPwd   = ""
+AzureTenantId                    = ""
+
+# Applicable only for Multi-Subscription deployment More detail visit : https://github.com/Azure/terraform-azurerm-caf-enterprise-scale/wiki/%5BUser-Guide%5D-Provider-Configuration#multi-subscription-deployment 
+
+subscription_id_connectivity = ""
+subscription_id_identity     = ""
+subscription_id_management   = ""
+
+root_id   = "your-alz-root-id"
+root_name = "Your ALZ Name"

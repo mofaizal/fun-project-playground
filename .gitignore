@@ -1,10 +1,12 @@
 # Local .terraform directories
 **/.terraform/*
-
+**.*/
 # .tfstate files
 *.tfstate
 *.tfstate.*
-
+*.terraform.lock.hcl
+.tflint.hcl
+*.hcl
 # Crash log files
 crash.log
 crash.*.log
@@ -15,6 +17,8 @@ crash.*.log
 # to change depending on the environment.
 *.tfvars
 *.tfvars.json
+*.key
+*.crt
 
 # Ignore override files as they are usually used to override resources locally and so
 # are not checked in
@@ -22,9 +26,6 @@ override.tf
 override.tf.json
 *_override.tf
 *_override.tf.json
-
-# Ignore transient lock info files created by terraform apply
-.terraform.tfstate.lock.info
 
 # Include override files you do wish to add to version control using negated pattern
 # !example_override.tf
@@ -35,3 +36,16 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+*.md.tmp
+*tfplan*
+.DS_Store
+.terraform.lock.hcl
+.tflint.hcl
+README-generated.md
+avm.tflint.hcl
+avm.tflint.merged.hcl
+avm.tflint_example.hcl
+avm.tflint_example.merged.hcl
+avmmakefile
+
+examples/simple_http_route_by_url_app_gateway/
