@@ -2,7 +2,7 @@
 
 variable "root_id" {
   type    = string
-  default = "au-ism"
+  default = "root_id"
 }
 
 variable "root_name" {
