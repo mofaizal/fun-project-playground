@@ -64,8 +64,8 @@ module "subnet" {
 module "nsg" {
   source              = "Azure/avm-res-network-networksecuritygroup/azurerm"
   version             = "0.2.0"
-  for_each            = toset(local.nsg_name)
-  name                = each.key
+  for_each            = local.subnet
+  name                = each.value.nsg_name
   resource_group_name = local.resource_group_name
   location            = local.location
   security_rules      = local.nsg_rules
@@ -73,12 +73,13 @@ module "nsg" {
 
 # Associate NSG and Subnet
 resource "azurerm_subnet_network_security_group_association" "ag_subnet_nsg_associate" {
-  network_security_group_id = module.nsg["websubnet-nsg"].resource_id
+  for_each                  = local.subnet
+  network_security_group_id = module.nsg[each.key].resource_id
   # Every NSG Rule Association will disassociate NSG from Subnet and Associate it, so we associate it only after NSG is completely created 
   #- Azure Provider Bug https://github.com/terraform-providers/terraform-provider-azurerm/issues/354  
-  subnet_id = module.subnet.webtier.resource_id
-
+  subnet_id = module.subnet[each.key].resource_id
 }
+
 ```
 
 <!-- markdownlint-disable MD033 -->

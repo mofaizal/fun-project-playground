@@ -14,19 +14,19 @@ locals {
     "webtier" = {
       name             = "websubnet"
       address_prefixes = "10.201.1.0/24"
+      nsg_name         = "websubnet-nsg"
     },
     "apptier" = {
       name             = "appsubnet"
       address_prefixes = "10.201.2.0/24"
+      nsg_name         = "appsubnet-nsg"
     },
     "dbtier" = {
       name             = "dbsubnet"
       address_prefixes = "10.201.3.0/24"
+      nsg_name         = "dbsubnet-nsg"
     },
   }
-
-  nsg_name = ["websubnet-nsg", "appsubnet-nsg", "dbsubnet-nsg"]
-
   nsg_rules = {
     "rule01" = {
       name                       = "rules"
