@@ -1,5 +1,3 @@
-#create resource group
-
 module "resource_group" {
   source   = "Azure/avm-res-resources-resourcegroup/azurerm"
   version  = "0.1.0"
@@ -50,4 +48,3 @@ resource "azurerm_subnet_network_security_group_association" "ag_subnet_nsg_asso
   #- Azure Provider Bug https://github.com/terraform-providers/terraform-provider-azurerm/issues/354  
   subnet_id = module.subnet[each.key].resource_id
 }
-

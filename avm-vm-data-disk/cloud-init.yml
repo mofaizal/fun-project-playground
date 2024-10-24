@@ -1,0 +1,46 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+
+# Commands to automatically format and mount the attached disk
+write_files:
+  - content: |
+      #!/bin/bash
+      # Detect the attached data disks (usually /dev/sdc and /dev/sdd, adjust as needed)
+      DEVICE="/dev/sdc"
+      DEVICE1="/dev/sdd"
+      
+      # Check if the disks have already been partitioned
+      if [ -z "$(lsblk -no FSTYPE $DEVICE)" ]; then
+          # Create a new partition on the first disk
+          echo -e "n\np\n1\n\n\nw" | fdisk $DEVICE
+          # Format the new partition with ext4 filesystem
+          mkfs.ext4 ${DEVICE}1
+      fi
+      
+      if [ -z "$(lsblk -no FSTYPE $DEVICE1)" ]; then
+          # Format the second disk directly
+          mkfs.ext4 $DEVICE1
+      fi
+
+      # Create mount points
+      mkdir -p /mnt/datadisk
+      mkdir -p /mnt/data2
+
+      # Mount the disks
+      mount ${DEVICE}1 /mnt/datadisk
+      mount ${DEVICE1} /mnt/data2
+      
+      # Add the disks to /etc/fstab so they auto-mount on boot
+      echo "${DEVICE}1 /mnt/datadisk ext4 defaults,nofail 0 2" >> /etc/fstab
+      echo "${DEVICE1} /mnt/data2 ext4 defaults,nofail 0 2" >> /etc/fstab
+    path: /var/lib/cloud/scripts/per-boot/disk-setup.sh
+    permissions: "0755"
+
+# runcmd:
+#   - [ /var/lib/cloud/scripts/per-boot/disk-setup.sh ] # Run the script to format and mount the disk```
+
+# This `cloud-init.yml` does the following:
+# - Updates and upgrades packages.
+# - Detects if the disk is already formatted. If not, it creates a partition and formats the disk with an `ext4` filesystem.
+# - Mounts the disk at `/mnt/datadisk` and ensures the disk is added to `/etc/fstab` so it is automatically mounted on reboot.
