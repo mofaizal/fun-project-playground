@@ -46,32 +46,32 @@ module "publicipaddress" {
   depends_on          = [module.resource_group]
 }
 
-# To test and ensure that the disk is attached to the VM. 
-# otherwise this module not required. 
-module "azure_bastion" {
-  source  = "Azure/avm-res-network-bastionhost/azurerm"
-  version = "0.3.0"
+# # To test and ensure that the disk is attached to the VM. 
+# # otherwise this module not required. 
+# module "azure_bastion" {
+#   source  = "Azure/avm-res-network-bastionhost/azurerm"
+#   version = "0.3.0"
 
 
-  name                = "bastionhost"
-  resource_group_name = module.resource_group.name
-  location            = local.location
-  copy_paste_enabled  = true
-  file_copy_enabled   = false
-  sku                 = "Standard"
-  ip_configuration = {
-    name                 = "my-ipconfig"
-    subnet_id            = module.subnet["AzureBastionSubnet"].resource_id
-    public_ip_address_id = module.publicipaddress.public_ip_id
-  }
-  ip_connect_enabled     = true
-  scale_units            = 4
-  shareable_link_enabled = true
-  tunneling_enabled      = true
-  kerberos_enabled       = true
+#   name                = "bastionhost"
+#   resource_group_name = module.resource_group.name
+#   location            = local.location
+#   copy_paste_enabled  = true
+#   file_copy_enabled   = false
+#   sku                 = "Standard"
+#   ip_configuration = {
+#     name                 = "my-ipconfig"
+#     subnet_id            = module.subnet["AzureBastionSubnet"].resource_id
+#     public_ip_address_id = module.publicipaddress.public_ip_id
+#   }
+#   ip_connect_enabled     = true
+#   scale_units            = 4
+#   shareable_link_enabled = true
+#   tunneling_enabled      = true
+#   kerberos_enabled       = true
 
-  depends_on = [module.subnet, module.publicipaddress]
-}
+#   depends_on = [module.subnet, module.publicipaddress]
+# }
 
 module "azure_linux_virtual_machine" {
 
